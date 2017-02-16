@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Usagi</title>
+    <link rel="stylesheet" type="text/css" href="bower_components/semantic/dist/semantic.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="src/app.css">
+</head>
+
+<body>
+    <div class="ui inverted menu navbar page grid">
+        <a href="" class="brand item">Usagi</a>
+        <div class="menu">
+            <div class="item address">
+                <div class="ui fluid labeled input">
+                    <div class="ui label">amqp://</div>
+                    <input id="usagi-rabbitmq-params" placeholder="user:password@host:port" value="">
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <button id="usagi-request-send" class="ui green button">Send</button>
+        </div>
+    </div>
+
+    <div class="ui equal width row column grid usagi-page">
+        <div class="ui column">
+            <h4>Request</h4>
+            <div class="ui form">
+                <div class="field">
+                    <input id="usagi-request-queue" placeholder="Queue name" type="text" value="">
+                </div>
+                <div class="field">
+                    <input id="usagi-request-method" placeholder="Method name" type="text" value="">
+                </div>
+                <div id="usagi-request-fields-container">
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="text" name="key[]" class="usagi-request-field-key" placeholder="Key">
+                        </div>
+                        <div class="field">
+                            <input type="text" name="value[]" class="usagi-request-field-value" placeholder="Value">
+                        </div>
+                        <button class="ui icon button red usagi-request-field-del">
+                            <i class="fa fa-minus-square" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <button class="ui icon button green usagi-request-field-add">
+                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="ui column">
+            <h4>Response</h4>
+            <div id="usagi-response-container">
+            </div>
+        </div>
+    </div>
+    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script src="src/app.js"></script>
+</body>
+</html>
