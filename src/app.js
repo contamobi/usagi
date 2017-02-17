@@ -120,8 +120,9 @@ function sendRequest(event) {
 
 /**
  * Get random uuid
- * @return {Integer}
+ * @return {String}
  */
 function generateUniqueId() {
-    return +new Date;
+    var data = +new Date;
+    return data.toString();
 }
