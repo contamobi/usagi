@@ -4,6 +4,8 @@
  * @author Joubert RedRat <me+github@redrat.com.br>
  */
 
+window.$ = window.jQuery = require('jquery');
+
 /**
  * Events on ready
  * @return {void}
@@ -59,6 +61,12 @@ function getRequestParams() {
     obj = {}
     /* TODO: get form params to build here */
 
+    if ($('.usagi-request-field-key').length == $('.usagi-request-field-value').length) {
+        for (i = 0; i < $('.usagi-request-field-key').length; i++) {
+            obj[$('.usagi-request-field-key')[i].value] = $('.usagi-request-field-value')[i].value;
+        }
+    }
+
     return obj;
 }
 
@@ -80,7 +88,7 @@ function getRequestData() {
 }
 
 /**
- * Send request to queue
+ * Send request to queue and display response
  * @return {Bool}
  */
 function sendRequest(event) {
@@ -99,7 +107,12 @@ function sendRequest(event) {
 
                 ch.consume(q.queue, function(msg) {
                     if (msg.properties.correlationId == corr) {
-                        $("#usagi-response-container").html(msg.content.toString());
+
+                        var jsonStr = msg.content.toString();
+                        var jsonObj = JSON.parse(jsonStr);
+                        var jsonPretty = JSON.stringify(jsonObj, null, '  ');
+                        $("#usagi-response-container").html(jsonPretty);
+
                         return false;
                         setTimeout(function() {
                             conn.close();
