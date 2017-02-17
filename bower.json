@@ -1,0 +1,25 @@
+{
+  "name": "Usagi",
+  "description": "RabbitMQ Desktop Client",
+  "main": "main.js",
+  "authors": [
+    "Joubert RedRat <me+github@redrat.com.br>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "RabbitMQ",
+    "AMQP"
+  ],
+  "homepage": "https://github.com/contamobi/usagi",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "fontawesome#^4.7.0",
+    "semantic": "semantic-ui#^2.2.7"
+  }
+}

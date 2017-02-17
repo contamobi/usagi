@@ -1,0 +1,15 @@
+.address {
+    width: 700px !important;
+}
+
+.usagi-page {
+    margin-left: 0px !important;
+    margin-right: 0px !important
+}
+
+#usagi-response-container {
+    min-height: 100px;
+    background: #d8d8d8;
+    border: 2px solid #939393;
+    -webkit-border-radius: 4px;
+}
