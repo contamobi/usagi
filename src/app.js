@@ -59,11 +59,12 @@ function fieldDel(event) {
  */
 function getRequestParams() {
     obj = {}
-    /* TODO: get form params to build here */
 
     if ($('.usagi-request-field-key').length == $('.usagi-request-field-value').length) {
         for (i = 0; i < $('.usagi-request-field-key').length; i++) {
-            obj[$('.usagi-request-field-key')[i].value] = $('.usagi-request-field-value')[i].value;
+            if ($('.usagi-request-field-key')[i].value) {
+                obj[$('.usagi-request-field-key')[i].value] = $('.usagi-request-field-value')[i].value;
+            }
         }
     }
 
@@ -93,6 +94,23 @@ function getRequestData() {
  */
 function sendRequest(event) {
     event.preventDefault();
+
+    var error = [];
+
+    if (!$("#usagi-rabbitmq-params").val()) {
+        error.push('Connect params');
+    }
+    if (!$("#usagi-request-queue").val()) {
+        error.push('Queue name');
+    }
+    if (!$("#usagi-request-method").val()) {
+        error.push('Method name');
+    }
+
+    if (error.length > 0) {
+        alert('This fields is required:' + "\n\n" + error.join("\n"));
+        return false;
+    }
 
     var protocol = 'amqp://';
     var rabbitmq_host = protocol + $("#usagi-rabbitmq-params").val();
