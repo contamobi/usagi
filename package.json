@@ -18,6 +18,7 @@
     "app-category-type": "public.app-category.productivity"
   },
   "scripts": {
+    "app": "node_modules/.bin/electron .",
     "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --prune=true --out=builds"
   }
 }
