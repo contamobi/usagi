@@ -115,12 +115,13 @@ function sendRequest(event) {
     var protocol = 'amqp://';
     var rabbitmq_host = protocol + $("#usagi-rabbitmq-params").val();
     var queue = $("#usagi-request-queue").val();
+    var callback = 'usagi-' + queue + '-callback-' + generateUniqueId();
 
     var amqp = require('amqplib/callback_api');
 
     amqp.connect(rabbitmq_host, function(err, conn) {
         conn.createChannel(function(err, ch) {
-            ch.assertQueue('', {exclusive: true}, function(err, q) {
+            ch.assertQueue(callback, {durable: false, autoDelete: true}, function(err, q) {
                 var corr = generateUniqueId();
 
                 ch.consume(q.queue, function(msg) {
@@ -131,13 +132,14 @@ function sendRequest(event) {
                         var jsonPretty = JSON.stringify(jsonObj, null, '  ');
                         $("#usagi-response-container").html(jsonPretty);
 
+                        conn.close();
                         return false;
                         setTimeout(function() {
                             conn.close();
                             process.exit(0);
                         }, 500);
                     }
-                }, {noAck: true});
+                });
 
                 ch.sendToQueue(
                     queue,
