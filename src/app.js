@@ -120,8 +120,23 @@ function sendRequest(event) {
     var amqp = require('amqplib/callback_api');
 
     amqp.connect(rabbitmq_host, function(err, conn) {
+        if (err) {
+            alert(err.message);
+            return false;
+        }
+
         conn.createChannel(function(err, ch) {
+            if (err) {
+                alert(err.message);
+                return false;
+            }
+
             ch.assertQueue(callback, {durable: false, autoDelete: true}, function(err, q) {
+                if (err) {
+                    alert(err.message);
+                    return false;
+                }
+
                 var corr = generateUniqueId();
 
                 ch.consume(q.queue, function(msg) {
