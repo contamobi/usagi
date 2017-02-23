@@ -1,7 +1,7 @@
 {
   "name": "Usagi",
   "description": "RabbitMQ Desktop Client",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Joubert RedRat <me+github@redrat.com.br>",
   "main": "main.js",
   "devDependencies": {
