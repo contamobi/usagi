@@ -97,9 +97,19 @@ function sendRequest(event) {
 
     var error = [];
 
-    if (!$("#usagi-rabbitmq-params").val()) {
-        error.push('Connect params');
+    if (!$("#usagi-rabbitmq-host").val()) {
+        error.push('Connect host');
     }
+    if (!$("#usagi-rabbitmq-port").val()) {
+        error.push('Connect port');
+    }
+    if (!$("#usagi-rabbitmq-username").val()) {
+        error.push('Connect username');
+    }
+    if (!$("#usagi-rabbitmq-password").val()) {
+        error.push('Connect password');
+    }
+
     if (!$("#usagi-request-queue").val()) {
         error.push('Queue name');
     }
@@ -112,14 +122,18 @@ function sendRequest(event) {
         return false;
     }
 
-    var protocol = 'amqp://';
-    var rabbitmq_host = protocol + $("#usagi-rabbitmq-params").val();
+    const protocol = 'amqp://';
+    const rabbitmqHost = $("#usagi-rabbitmq-host").val()
+    const rabbitmqPort = $("#usagi-rabbitmq-port").val()
+    const rabbitmqUsername = $("#usagi-rabbitmq-username").val()
+    const rabbitmqPassword = $("#usagi-rabbitmq-password").val()
+    const connectionParameters = `${protocol}${rabbitmqUsername}:${rabbitmqPassword}@${rabbitmqHost}:${rabbitmqPort}`;
     var queue = $("#usagi-request-queue").val();
     var callback = 'usagi-' + queue + '-callback-' + generateUniqueId();
 
     var amqp = require('amqplib/callback_api');
 
-    amqp.connect(rabbitmq_host, function(err, conn) {
+    amqp.connect(connectionParameters, function(err, conn) {
         if (err) {
             alert(err.message);
             return false;
